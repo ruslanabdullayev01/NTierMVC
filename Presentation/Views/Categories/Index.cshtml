@@ -1,0 +1,23 @@
+﻿@model List<CategoryIndexVM>
+
+<table>
+    <thead>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Created At</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Title</td>
+                <td>@item.CreatedAt.ToShortDateString()</td>
+                <td>
+                    <a asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
