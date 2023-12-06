@@ -31,7 +31,7 @@ builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 var app = builder.Build();
 app.MapControllerRoute(
     name: "default",
-    pattern:"{controller}/{action}/{id?}"
+    pattern:"{controller}/{action=index}/{id?}"
     );
 
 app.Run();

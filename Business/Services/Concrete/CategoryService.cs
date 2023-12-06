@@ -2,6 +2,7 @@
 using Business.ViewModels;
 using Common.Entities;
 using DataAccess.Repositories.Abstract;
+using DataAccess.Repositories.Base;
 using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -53,10 +54,38 @@ namespace Business.Services.Concrete
 
             foreach (var item in categories)
             {
-                categoriesVM.Add(new CategoryIndexVM {Id= item.Id, Title = item.Title, CreatedAt = item.CreatedAt });
+                categoriesVM.Add(new CategoryIndexVM { Id = item.Id, Title = item.Title, CreatedAt = item.CreatedAt });
             }
 
             return categoriesVM;
+        }
+
+        public async Task<bool> Update(CategoryUpdateVM model, int id)
+        {
+            if (!_modelState.IsValid)
+            {
+                return false;
+            }
+            var category = await _repository.GetAsync(id);
+            if (category == null)
+            {
+                return false;
+            }
+            category.Title = model.Title;
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var category = await _repository.GetAsync(id);
+            if (category is null)
+            {
+                return false;
+            }
+            _repository.Delete(category);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }

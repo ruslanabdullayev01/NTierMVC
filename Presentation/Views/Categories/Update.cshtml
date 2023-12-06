@@ -1,0 +1,10 @@
+﻿@model CategoryUpdateVM
+
+<form method="post" asp-controller="Categories" asp-action="Update">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+    </div>
+    <button type="submit">Update</button>
+</form>

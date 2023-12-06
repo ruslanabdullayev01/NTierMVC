@@ -11,5 +11,7 @@ namespace Business.Services.Abstract
     {
         Task<bool> CreateAsync(CategoryCreateVM model);
         Task<List<CategoryIndexVM>> GetAllAsync();
+        Task<bool> Update(CategoryUpdateVM model, int id);
+        Task<bool> Delete(int id);
     }
 }

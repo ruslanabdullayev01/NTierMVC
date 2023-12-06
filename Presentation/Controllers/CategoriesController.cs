@@ -24,7 +24,6 @@ namespace Presentation.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(CategoryCreateVM model)
         {
@@ -33,8 +32,35 @@ namespace Presentation.Controllers
             {
                 return View(model);
             }
-             
+
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryUpdateVM model, int id)
+        {
+            bool result = await _service.Update(model, id);
+            if (!result)
+            {
+                return View(model);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool result = await _service.Delete(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index"); 
         }
     }
 }
